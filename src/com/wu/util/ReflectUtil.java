@@ -6,47 +6,17 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 /**
  * 反射工具类，提供相关方法。
- * @author Administrator
- *
+ * @author wuxinbo
+ * @version 1.0
+ * @since 1.0
  */
 public class ReflectUtil {
 	public static final String userClassName ="com.test.model.User";
 	/**
-	 * @param args
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 * @throws NoSuchMethodException 
-	 * @throws SecurityException 
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 */
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException, SecurityException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException {
-			Field[] Fields =getFieldFromObject(userClassName);
-			Method[] Methods =getMethodFromObject(userClassName);
-//			User user =new User();
-			System.out.println(getTypeOfField(Fields,"usercde"));
-			
-//			System.out.println(((User)setValue("setUsercde", "1234", Methods)).getUserCde());;
-/*
- * 方法测试。
- */
-			//			try {
-//			Object obj=createInstance(userClassName);
-//			Class <?>	userClass=Class.forName(userClassName);
-//			Method method =userClass.getMethod("setUserCde", String.class);
-//			method.invoke(obj, "123456");
-//			System.out.println(((User)obj).getUserCde());
-//			} catch (ClassNotFoundException e) {
-//				e.printStackTrace();
-//			}
-			
-			
-	}
-	/**
 	 * 获取某个属性的类型。
 	 * @param Fields 域集合
 	 * @param fieldName 成员名字。
-	 * @return
+	 * @return 获取成员变量的类型，例如（Integer,String）
 	 */
 	public static String getTypeOfField(Field[] Fields,String fieldName){
 		Type type =null;
@@ -75,7 +45,7 @@ public class ReflectUtil {
 	/**
 	 * 统计属性不为null的个数
 	 * @param obj
-	 * @return
+	 * @return 属性为空的个数
 	 */
 	public static int getCountOfField(Object obj){
 		int i=0;
@@ -111,7 +81,7 @@ public class ReflectUtil {
 	 * @param Methods
 	 * @param obj
 	 * @param value
-	 * @return
+	 * @return 封装好的对象。
 	 */
 	public static Object setMethodValue(String name,Method[] Methods,Object obj,Object value){
 		for (Method method : Methods) {
