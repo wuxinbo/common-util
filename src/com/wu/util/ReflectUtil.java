@@ -1,9 +1,13 @@
 package com.wu.util;
 
+import java.util.List;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
 /**
  * 反射工具类，提供相关方法。
  * @author wuxinbo
@@ -12,6 +16,7 @@ import java.lang.reflect.Type;
  */
 public class ReflectUtil {
 	public static final String userClassName ="com.test.model.User";
+	private static Logger log4j = LogUtil.createlog4j(ReflectUtil.class);
 	/**
 	 * 获取某个属性的类型。
 	 * @param Fields 域集合
@@ -77,15 +82,15 @@ public class ReflectUtil {
 	}
 	/**
 	 * 给方法赋值。
-	 * @param name
-	 * @param Methods
-	 * @param obj
-	 * @param value
+	 * @param methodName 方法名
+	 * @param Methods 方法集合
+	 * @param obj 需要赋值的对象。
+	 * @param value 数据
 	 * @return 封装好的对象。
 	 */
-	public static Object setMethodValue(String name,Method[] Methods,Object obj,Object value){
+	public static Object setMethodValue(String methodName,Method[] Methods,Object obj,Object value){
 		for (Method method : Methods) {
-			if (name.equalsIgnoreCase(method.getName())) {
+			if (methodName.equalsIgnoreCase(method.getName())) {
 				try {
 					method.invoke(obj, value);
 					
@@ -116,6 +121,7 @@ public class ReflectUtil {
 		}
 		return null;
 	}
+	
 	/**
 	 * 利用反射生成一个对象。
 	 * @param className 类的全名。
@@ -143,9 +149,9 @@ public class ReflectUtil {
 		Class<?> obj;
 		try {
 			obj = Class.forName(className);
-			return obj.getDeclaredFields();
+			return obj.getDeclaredFields(); //获取已生成的成员变量集合。
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			log4j.error("类名没找到！");
 		}
 		return null;
 		
@@ -167,6 +173,34 @@ public class ReflectUtil {
 		
 	}
 	/**
+	 * 获取一个对象的所有方法。
+	 * @param obj
+	 * @return 所有的方法集合
+	 */
+	public static Method[] getMethodFromObject(Object obj){
+		return obj.getClass().getDeclaredMethods();
+		
+	}
+	/**
+	 * 获取一个对象的所有方法。
+	 * @param obj
+	 * @param pattern 匹配规则，例如（Set**）,暂时支持匹配开头。
+	 * @return 符合条件的所有的方法集合
+	 */
+	public static List<Method> getMethodFromObject(Object obj,String pattern){
+		Method[] methods =getMethodFromObject(obj);
+		List<Method> list =new ArrayList<Method>();
+		if (pattern!=null&&!pattern.equals("")) { //非空情况下
+			for (Method method : methods) {
+				if (method.getName().startsWith(pattern)) { //匹配开头。
+					list.add(method);
+				}
+			}
+		}
+		return list;
+		
+	}
+	/**
 	 * 判断成员方法中是否包含给定的方法名（不区分大小写）。
 	 * @param name 需要判断的方法名。
 	 * @param Methods 成员方法集合。
@@ -174,11 +208,37 @@ public class ReflectUtil {
 	 */
 	public static boolean isEqualMethodName(String name,Method[] Methods){
 		for (Method method : Methods) {
-			if ("getuserCde".equalsIgnoreCase(method.getName())) {
+			if (name.equalsIgnoreCase(method.getName())) {
 				return true;
 			}
 			continue;
 		}
 		return false;
+	}
+	
+	/**
+	 * 对象赋值，将一个对象中的相同字段赋值给另一个对象（当两个字段类型相同）
+	 * @param ClassName 类全名，
+	 * @param object 绑定有数据的对象
+	 * @return 
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
+	public static Object setObjectValueFromObject(String ClassName,Object object) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		Object obj =createInstance(ClassName);
+		List<Method> getMethods = getMethodFromObject(object,"get"); //获取所有的get方法
+		List<Method> setMethods = getMethodFromObject(obj,"set"); //获取所有的set方法。
+		Method[] methods =setMethods.toArray(new Method[0]);
+		String methodName =""; //暂时存储
+		for (Method method : getMethods) {
+			if (method.invoke(object, null)!=null) { //获取方法的返回值。
+				methodName ="set"+method.getName().substring(3,method.getName().length());
+				if (isEqualMethodName(methodName,methods)) {//方法名比较。没有匹配的返回null
+					setMethodValue(methodName, methods, obj, method.invoke(object, null)); //方法赋值。
+				}
+			}
+		}
+		return obj;
 	}
 }
