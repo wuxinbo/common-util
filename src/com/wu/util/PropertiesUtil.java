@@ -1,6 +1,7 @@
 package com.wu.util;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
@@ -38,9 +39,26 @@ public class PropertiesUtil {
 		try {
 			return new String(value.getBytes("utf-8"));
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
+	}
+	/**
+	 * 将键值对保存到配置文件中。
+	 * @param key 键
+	 * @param value 值
+	 * @param fileName 文件名
+	 * @param updateInfo 更新信息
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 */
+	public static void setValue(String key,String value,String fileName, String updateInfo) throws FileNotFoundException, IOException{
+		Properties property =getProperties(fileName);
+		/*
+		 * 配置文件路径。
+		 */
+		String  path =Properties.class.getResource(fileName).getPath().toString();
+		property.setProperty(key, value);
+		property.store(new FileOutputStream(path.substring(1, path.length())), updateInfo);
 	}
 }
