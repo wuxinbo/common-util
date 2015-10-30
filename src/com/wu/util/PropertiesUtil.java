@@ -32,6 +32,7 @@ public class PropertiesUtil {
 	/**
 	 * 根据键找到对应的值。
 	 * @param key
+	 * @return 返回对应的值
 	 */
 	public static String getValueFromKey(String key,String fileName){
 		Properties property =getProperties(fileName);
