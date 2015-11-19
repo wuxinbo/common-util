@@ -182,6 +182,29 @@ public class ReflectUtil {
 		
 	}
 	/**
+	 * 获取对象的所有的字段集合
+	 * @param obj
+	 * @return 返回字段集合
+	 */
+	public static Field[] getFieldsFromObject(Object obj){
+		return obj.getClass().getDeclaredFields();
+	}
+	/**
+	 * 获取对象的所有的字段集合
+	 * @param obj
+	 * @return 返回字段集合
+	 */
+	public static Field[] getFieldsFromObject(String className){
+		Class<?> obj;
+		try {
+			obj = Class.forName(className);
+			return obj.getDeclaredFields();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
 	 * 获取一个对象的所有方法。
 	 * @param obj
 	 * @param pattern 匹配规则，例如（Set**）,暂时支持匹配开头。

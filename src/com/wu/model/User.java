@@ -2,6 +2,8 @@ package com.wu.model;
 
 import java.util.Date;
 
+import com.wu.annotation.ValidateAnnotation;
+
 
 /**
  * dmis用户模型类。
@@ -9,6 +11,7 @@ import java.util.Date;
  *
  */
 public class User {
+	@ValidateAnnotation(isBlank=false)
 	private String userName;
 	private String password;
 	private String deptCde;
