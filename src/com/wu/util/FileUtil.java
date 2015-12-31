@@ -12,7 +12,11 @@ import java.io.IOException;
  *
  */
 public class FileUtil {
+	/**
+	 * 总行数.
+	 */
 	private static int lines =0;
+	
 	/**
 	 * 统计该目录下文件行数
 	 * @param dirName 文件名
