@@ -1,4 +1,4 @@
-package com.wu;
+package com.wu.test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
