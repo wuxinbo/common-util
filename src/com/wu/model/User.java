@@ -2,7 +2,7 @@ package com.wu.model;
 
 import java.util.Date;
 
-import com.wu.annotation.ValidateAnnotation;
+import com.wu.annotation.Validate;
 
 
 /**
@@ -11,7 +11,7 @@ import com.wu.annotation.ValidateAnnotation;
  *
  */
 public class User {
-	@ValidateAnnotation(isBlank=false)
+	@Validate(isBlank=false)
 	private String userName;
 	private String password;
 	private String deptCde;

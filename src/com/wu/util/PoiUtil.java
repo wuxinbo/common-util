@@ -1,10 +1,10 @@
-package com.wu;
+package com.wu.util;
 
+import com.wu.Constant;
 import com.wu.Interface.ExeclOpreationIn;
 import com.wu.exception.IoExcelException;
 import com.wu.model.User;
-import com.wu.util.PropertiesUtil;
-import com.wu.util.ReflectUtil;
+
 import org.apache.log4j.Logger;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
