@@ -1,4 +1,4 @@
-package com.wu;
+package com.wu.constant;
 
 import java.util.HashMap;
 import java.util.Map;

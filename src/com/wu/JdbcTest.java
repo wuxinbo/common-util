@@ -1,5 +1,6 @@
 package com.wu;
 
+import com.wu.constant.Constant;
 import com.wu.model.User;
 import com.wu.util.ReflectUtil;
 import org.apache.log4j.Logger;
@@ -270,7 +271,7 @@ public class JdbcTest {
 			 try{
 				 
 				//从Excel文件中读取需要的数据
-				 List<User> list =PoiUtil.getListFromExcel("d:/用户测试.xls","com.wu.model.User",Constant.userMap); 
+				 List<User> list = PoiUtil.getListFromExcel("d:/用户测试.xls", "com.wu.model.User", Constant.userMap);
 				 Time now =new Time(new Date().getTime());
 				 int size =list.size();
 				 for (int i=0;i<size;i++) {
