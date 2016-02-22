@@ -19,11 +19,11 @@ import java.util.List;
  * @author Administrator
  *
  */
-public class JdbcTest {
-	private static final String URL="jdbc:oracle:thin:@10.16.62.15:1521:dmis";
+public class JdbcUtil {
+	private static final String URL="jdbc:oracle:thin:@192.168.0.209:1521:zxin";
 //	private static final String URL="jdbc:oracle:thin:@10.1.2.37:1521:dmis";
-	private static final String USERNAME ="finance";
-	private static final String PASSWORD ="dmis";
+	private static final String USERNAME ="zpay";
+	private static final String PASSWORD ="ZPAY";
 	private static Connection conn=null;
 	private static ResultSet set=null;
 	private static PreparedStatement sta =null;
@@ -38,16 +38,17 @@ public class JdbcTest {
 	 * 查询用户表
 	 */
 	public static final String QUERY_USER ="SELECT c_user_cde as userCde,c_user_nme as userName ,c_dept_cde as deptCde ,c_state as state ,c_password as password ,c_crt_cde as createUser,T_CRT_TM as createDate FROM t_user";
-	private static Logger log4j =Logger.getLogger(JdbcTest.class);
+	private static Logger log4j =Logger.getLogger(JdbcUtil.class);
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-				insertToUser();
-//		List<String> indexlist =getSqlArgs(INSERT_TEST,"#");
-//		for (String integer : indexlist) {
-//			System.out.println(integer);
-//		}
+//				insertToUser();
+		List<String> indexlist =getSqlArgs(INSERT_TEST,"#");
+		for (String integer : indexlist) {
+			System.out.println(integer);
+		}
+
 	}
 	/**
 	 * ����ݲ��뵽t_user�?
@@ -60,7 +61,7 @@ public class JdbcTest {
 		}
 	}
 	public void logTest(){
-		Logger log4j =Logger.getLogger(getClass());
+//		Logger log4j =Logger.getLogger(getClass());
 		log4j.info("log hello world");
 	} 
 	/**
