@@ -17,7 +17,6 @@ import java.util.List;
 
 public class ExcelOpreationImpl implements ExeclOpreationIn {
 
-	@Override
 	public void WriteDataToXls(String path) {
 		Workbook book =new XSSFWorkbook();
 		Sheet sheet=book.createSheet("用户表");
@@ -56,7 +55,6 @@ public class ExcelOpreationImpl implements ExeclOpreationIn {
 		
 	}
 	
-	@Override
 	public void setExcelHeader(Field[] fields, List list) {
 		for (Object object : list) {
 //			USer

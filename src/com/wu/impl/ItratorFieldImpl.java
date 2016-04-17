@@ -12,7 +12,6 @@ public class ItratorFieldImpl implements OnItreatorField {
 	/**
 	 * 将对象的不为null的属性输出到excelRow上
 	 */
-	@Override
 	public void ItratorObject(Object obj, Field[] fields,Row row)
 			throws IllegalArgumentException, IllegalAccessException {
 		int i=0;
