@@ -29,7 +29,7 @@
 		<repository>
 		<id>nexus</id>
 		<name>nexus</name>
-		<uniqueVersion>1.0.0-SNAPSHOTS</uniqueVersion>
+		<uniqueVersion>true</uniqueVersion>
 		<url>http://192.168.1.108:8081/nexus/content/repositories/snapshots/</url>
 		</repository>
 	</distributionManagement>
@@ -64,5 +64,10 @@
 		<artifactId>mongodb-driver</artifactId>
 		<version>3.0.4</version>
 	</dependency>
+	<dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpclient</artifactId>
+    <version>4.5.2</version>
+</dependency>
 	</dependencies>
 </project>
