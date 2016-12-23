@@ -14,10 +14,15 @@ import java.lang.annotation.Target;
 @Target(value=ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface ValidateAnnotation {
+public @interface Validate {
 		/**
 		 * 是否可以为空
 		 * @return true可以为null,false为not null
 		 */
 		public  boolean isBlank () default true;
+		/**
+		 * 最小长度
+		 * @return 默认长度为0
+		 */
+		public int minLength() default 0;
 }

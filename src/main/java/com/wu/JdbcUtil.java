@@ -1,19 +1,14 @@
 package com.wu;
 
-import com.wu.constant.Constant;
+
 import com.wu.model.User;
-import com.wu.util.PoiUtil;
 import com.wu.util.ReflectUtil;
-
 import org.apache.log4j.Logger;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 /**
  * 用户添加主文件，将用户添加到数据库，可以执行此文件批量添加。
@@ -50,16 +45,6 @@ public class JdbcUtil {
 			System.out.println(integer);
 		}
 
-	}
-	/**
-	 * ����ݲ��뵽t_user�?
-	 */
-	public static void insertToUser() {
-		if(isFinance()){//根据用户名选择要执行的sql语句。
-			insert(INSERT_FINANCE);
-		}else{
-			insert(INSERT_DMISORACLE);
-		}
 	}
 	public void logTest(){
 //		Logger log4j =Logger.getLogger(getClass());
@@ -212,7 +197,7 @@ public class JdbcUtil {
 			 */
 			String ColumeName ="";
 			Method[] Methods =ReflectUtil.getMethodFromObject(userClassName);
-			Field[] fields =ReflectUtil.getFieldFromObject(userClassName);
+			Field[] fields = ReflectUtil.getFieldFromObject(userClassName);
 			List users =new ArrayList();
 			int ColumnCount=metadata.getColumnCount()+1;
 			while(set.next()){
@@ -267,45 +252,7 @@ public class JdbcUtil {
 			return false;
 		}
 	}
-	public static void insert(String sql){
-		 String password =getTriplDESStr("123456");
-		 sta =(PreparedStatement)getStatement(sql);
-		 if(isFinance()){
-			 try{
-				 
-				//从Excel文件中读取需要的数据
-				 List<User> list = PoiUtil.getListFromExcel("d:/用户测试.xls", "com.wu.model.User", Constant.userMap);
-				 Time now =new Time(new Date().getTime());
-				 int size =list.size();
-				 for (int i=0;i<size;i++) {
-						sta.setString(1, list.get(i).getUserCde());
-						sta.setString(2, list.get(i).getUserName());
-						sta.setString(3, list.get(i).getDeptCde());
-						sta.setString(4, list.get(i).getDeptCde());
-						sta.setString(5, "1");
-						sta.setString(6, password);
-						sta.setTime(7,now);
-						sta.addBatch();
-					} 
-				 	sta.executeBatch();
-					conn.commit();
-			 }catch (SQLException e) {
-					System.out.println("insert failed!");
-					try {
-						conn.rollback();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					e.printStackTrace();
-				} catch (InvalidFormatException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		 }
-		closeJdbc(conn,sta,set);
-	}
-	
+
 	public static String getDESStr(String usernamePwd){
 		return DesTest.encodeCipher(usernamePwd);
 	}
