@@ -1,6 +1,6 @@
 package com.wu.util;
 import com.alibaba.fastjson.JSON;
-import com.zte.ztepay.bchannel.dto.HttpsInfo;
+import com.wu.model.HttpsInfo;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.URIException;
 import org.apache.http.client.config.RequestConfig;
@@ -40,8 +40,8 @@ public class HttpClientUtil {
      */
     private  static CloseableHttpClient httpsClient=null;
     private static RequestConfig httpConfig= RequestConfig.custom()
-            .setSocketTimeout(Integer.parseInt(PropertiesUtil.getPropertie("readTimeout")))
-            .setConnectTimeout( Integer.parseInt(PropertiesUtil.getPropertie("conTimeout")))
+//            .setSocketTimeout(Integer.parseInt(PropertiesUtil.getValueFromKey("readTimeout","")))
+//            .setConnectTimeout( Integer.parseInt(PropertiesUtil.getPropertie("conTimeout")))
             .build();
 
     /**
@@ -105,8 +105,8 @@ public class HttpClientUtil {
         String  [] urlinfo =url.split(":");
         String port=urlinfo.length <3?"443": urlinfo[2].substring(0,urlinfo[2].indexOf("/"));
         info.setHttpsPort(Integer.parseInt(port));
-        info.setKeyStorePass(PropertiesUtil.getPropertie("clientP12Pwd"));
-        info.setTrustStorePass(PropertiesUtil.getPropertie("keystorePwd"));
+//        info.setKeyStorePass(PropertiesUtil.getPropertie("clientP12Pwd"));
+//        info.setTrustStorePass(PropertiesUtil.getPropertie("keystorePwd"));
         try {
             tempHttpClient.getConnectionManager().getSchemeRegistry().register(new HttpClientUtil().getSchme(info));
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package com.wu;
 
 
 import com.wu.model.User;
+import com.wu.test.DesTest;
 import com.wu.util.ReflectUtil;
 import org.apache.log4j.Logger;
 

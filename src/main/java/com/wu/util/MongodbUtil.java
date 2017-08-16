@@ -29,7 +29,7 @@ public class MongodbUtil {
 	}
 	public static MongoClient getMongoClient(){
 		if (mongoClient==null) {
-			mongoClient =new MongoClient(new MongoClientURI("mongodb://192.168.1.108:27017"));
+			mongoClient =new MongoClient(new MongoClientURI("mongodb://192.168.0.152:27017"));
 		}
 		return mongoClient;
 	}
@@ -37,14 +37,24 @@ public class MongodbUtil {
 		db =getMongoClient().getDatabase("test");
 	}
 	public static void test(){
-		FindIterable<Document> iterable = db.getCollection("test").find();
+		FindIterable<Document> iterable = db.getCollection("EcardType").find();
 		for (Document data : iterable) {
 			System.out.println(data.toJson());
 		}
 	}
+
 	public static void insert(){
-		
-		db.getCollection("test").insertOne(new Document().append("name", "lisi"));
+		Document ecardType =Document.parse("{" +
+				"   \"name\" : \"bob\"," +
+				"   \"age\" : 42," +
+				"   \"type\" : 1," +
+				"   \"status\" : \"A\"," +
+				"   \"favorites\" : { \"artist\" : \"Miro\" }," +
+				"   \"finished\" : [ 11, 25 ]," +
+				"   \"badges\" : [ \"green\" ]," +
+				"   \"points\" : [ { \"points\" : 85, \"bonus\" : 20 }, { \"points\" : 64, \"bonus\" : 12 } ]" +
+				"}");
+		db.getCollection("EcardType").insertOne(ecardType);
 	}
 	public static void insert(String json){
 //		DBObject dbObject=
